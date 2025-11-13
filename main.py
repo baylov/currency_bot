@@ -4,6 +4,7 @@ from contextlib import suppress
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
+from aiogram.client.default import DefaultBotProperties
 from aiogram.exceptions import TelegramAPIError
 
 from config import settings
@@ -24,7 +25,7 @@ async def main() -> None:
         # Initialize bot
         bot = Bot(
             token=settings.telegram_bot_token,
-            parse_mode=ParseMode.HTML,
+            default=DefaultBotProperties(parse_mode=ParseMode.HTML)
         )
         
         # Initialize dispatcher
