@@ -1,7 +1,9 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, Float, Enum as SQLEnum
 from datetime import datetime
+import uuid
+import enum
 
 from config import settings
 from utils.logger import get_logger
@@ -54,6 +56,34 @@ class MessageLog(Base):
     message_text = Column(Text, nullable=False)
     message_type = Column(String, nullable=False)  # 'command', 'text', etc.
     is_bot_message = Column(Boolean, default=False, nullable=False)
+
+
+class AlertDirection(str, enum.Enum):
+    """Alert direction types."""
+    ABOVE = "above"
+    BELOW = "below"
+
+
+class AlertStatus(str, enum.Enum):
+    """Alert status types."""
+    ACTIVE = "active"
+    TRIGGERED = "triggered"
+    PAUSED = "paused"
+    DELETED = "deleted"
+
+
+class Alert(Base):
+    """Model for price alerts."""
+    
+    __tablename__ = "alerts"
+    
+    alert_id = Column(String, unique=True, index=True, nullable=False, default=lambda: str(uuid.uuid4()))
+    user_id = Column(Integer, nullable=False, index=True)
+    asset = Column(String, nullable=False)  # 'btc', 'eth', 'usdt'
+    threshold = Column(Float, nullable=False)
+    direction = Column(SQLEnum(AlertDirection), nullable=False)
+    status = Column(SQLEnum(AlertStatus), default=AlertStatus.ACTIVE, nullable=False)
+    language_preference = Column(String, default="en", nullable=False)
 
 
 async def init_db() -> None:
