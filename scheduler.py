@@ -5,6 +5,7 @@ from typing import Optional
 
 from aiogram import Bot
 from config import settings
+from api_client import get_crypto_prices, APIError
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -73,6 +74,33 @@ async def send_periodic_message(bot: Bot) -> None:
         # await bot.send_message(chat_id=ADMIN_CHAT_ID, text="Periodic check-in! 🔄")
     except Exception as e:
         logger.error(f"Error in periodic message job: {e}")
+
+
+async def send_price_update(bot: Bot, chat_id: int) -> None:
+    """Example job: Send cryptocurrency price update.
+    
+    This demonstrates how to use the API client in scheduled jobs.
+    Usage: scheduler.add_job(send_price_update, ..., args=[bot, chat_id])
+    """
+    try:
+        logger.info("Fetching cryptocurrency prices for scheduled update")
+        
+        prices = await get_crypto_prices()
+        
+        message = (
+            f"📊 <b>Price Update ({prices['currency']})</b>\n\n"
+            f"₿ Bitcoin: {prices['btc']:,.2f} ₽\n"
+            f"Ξ Ethereum: {prices['eth']:,.2f} ₽\n"
+            f"₮ Tether: {prices['usdt']:.2f} ₽\n"
+        )
+        
+        await bot.send_message(chat_id=chat_id, text=message, parse_mode="HTML")
+        logger.info(f"Price update sent to chat {chat_id}")
+        
+    except APIError as e:
+        logger.error(f"API error in price update job: {e}")
+    except Exception as e:
+        logger.error(f"Error in price update job: {e}", exc_info=True)
 
 
 def get_scheduler() -> Optional[AsyncIOScheduler]:
