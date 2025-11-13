@@ -19,6 +19,9 @@ class Settings(BaseSettings):
         default="https://api.coingecko.com/api/v3", 
         alias="COINGECKO_BASE_URL"
     )
+    api_timeout: int = Field(default=30, alias="API_TIMEOUT")
+    api_max_retries: int = Field(default=3, alias="API_MAX_RETRIES")
+    api_retry_delay: float = Field(default=1.0, alias="API_RETRY_DELAY")
     
     # Scheduler Configuration
     scheduler_timezone: str = Field(default="UTC", alias="SCHEDULER_TIMEZONE")

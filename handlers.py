@@ -5,6 +5,7 @@ from sqlalchemy import select
 
 from localization import localization
 from database import User, get_db_session
+from api_client import get_crypto_prices, APIError
 from utils.logger import get_logger
 from utils.localization_helpers import (
     send_localized_message,
@@ -83,6 +84,42 @@ async def handle_language(message: Message) -> None:
         "commands.language_select",
         reply_markup=keyboard
     )
+
+
+@router.message(Command("prices"))
+async def handle_prices(message: Message) -> None:
+    """Handle /prices command - fetch and display cryptocurrency prices."""
+    try:
+        # Send "fetching" message
+        status_msg = await message.answer("⏳ Fetching current prices...")
+        
+        # Fetch prices from CoinGecko
+        prices = await get_crypto_prices()
+        
+        # Format the response
+        response = (
+            f"💰 <b>Current Cryptocurrency Prices ({prices['currency']})</b>\n\n"
+            f"₿ <b>Bitcoin:</b> {prices['btc']:,.2f} ₽\n"
+            f"Ξ <b>Ethereum:</b> {prices['eth']:,.2f} ₽\n"
+            f"₮ <b>Tether:</b> {prices['usdt']:.2f} ₽\n"
+        )
+        
+        # Delete status message and send result
+        await status_msg.delete()
+        await message.answer(response, parse_mode="HTML")
+        
+        logger.info(f"Prices sent to user {message.from_user.id}")
+        
+    except APIError as e:
+        logger.error(f"API error in prices handler: {e}")
+        await message.answer(
+            "❌ Failed to fetch prices from CoinGecko. Please try again later."
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error in prices handler: {e}", exc_info=True)
+        await message.answer(
+            "❌ An unexpected error occurred. Please try again later."
+        )
 
 
 @router.callback_query(F.data.startswith("lang_"))
