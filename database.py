@@ -67,7 +67,7 @@ async def init_db() -> None:
         raise
 
 
-async def get_db_session() -> AsyncSession:
+def get_db_session() -> AsyncSession:
     """Get a database session."""
     return AsyncSessionLocal()
 

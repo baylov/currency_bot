@@ -1,9 +1,11 @@
 {
   "commands": {
     "start": "Welcome to the bot! 🚀\n\nThis is a template for an async Telegram bot with APScheduler support.\nUse /help to see available commands.",
-    "help": "📋 Available commands:\n\n/start - Start the bot\n/help - Show this help message\n/status - Check bot status",
+    "help": "📋 Available commands:\n\n/start - Start the bot\n/help - Show this help message\n/status - Check bot status\n/language - Change language",
     "status": "✅ Bot is running normally!",
-    "unknown": "I don't understand this command. Use /help to see available commands."
+    "unknown": "I don't understand this command. Use /help to see available commands.",
+    "language_set": "Language has been set to English.",
+    "language_select": "Please select your preferred language:"
   },
   "errors": {
     "general": "An error occurred. Please try again later.",
@@ -14,5 +16,12 @@
     "bot_started": "Bot started successfully!",
     "bot_stopped": "Bot stopped.",
     "job_executed": "Scheduled job executed successfully."
+  },
+  "keyboard": {
+    "english": "English",
+    "russian": "Русский",
+    "back": "Back",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
 }
