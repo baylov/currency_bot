@@ -1,0 +1,18 @@
+{
+  "commands": {
+    "start": "Welcome to the bot! 🚀\n\nThis is a template for an async Telegram bot with APScheduler support.\nUse /help to see available commands.",
+    "help": "📋 Available commands:\n\n/start - Start the bot\n/help - Show this help message\n/status - Check bot status",
+    "status": "✅ Bot is running normally!",
+    "unknown": "I don't understand this command. Use /help to see available commands."
+  },
+  "errors": {
+    "general": "An error occurred. Please try again later.",
+    "network": "Network error. Please check your connection and try again.",
+    "timeout": "Request timed out. Please try again."
+  },
+  "messages": {
+    "bot_started": "Bot started successfully!",
+    "bot_stopped": "Bot stopped.",
+    "job_executed": "Scheduled job executed successfully."
+  }
+}
