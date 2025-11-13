@@ -1,16 +1,36 @@
 {
   "commands": {
     "start": "Welcome to the bot! 🚀\n\nThis is a template for an async Telegram bot with APScheduler support.\nUse /help to see available commands.",
-    "help": "📋 Available commands:\n\n/start - Start the bot\n/help - Show this help message\n/status - Check bot status\n/language - Change language",
+    "help": "📋 Available commands:\n\n/start - Start the bot\n/help - Show this help message\n/status - Check bot status\n/language - Change language\n/prices - Get current crypto prices\n/setalert - Set a price alert\n/myalerts - View your alerts\n/remove - Remove an alert\n/settings - Change settings",
     "status": "✅ Bot is running normally!",
     "unknown": "I don't understand this command. Use /help to see available commands.",
     "language_set": "Language has been set to English.",
-    "language_select": "Please select your preferred language:"
+    "language_select": "Please select your preferred language:",
+    "settings": "⚙️ Settings:\n\n🌐 Current Language: {current_language}\n\nSelect a language to change your preference:",
+    "settings_updated": "✅ Settings updated successfully!"
+  },
+  "alerts": {
+    "select_asset": "📊 Select a cryptocurrency to set an alert for:",
+    "select_direction": "Choose alert direction for {asset}:",
+    "enter_price": "Enter the price threshold for {asset} in RUB:",
+    "alert_created": "✅ Alert created successfully!\n\nAsset: {asset}\nDirection: {direction}\nThreshold: ₽{threshold:,.2f}",
+    "alert_created_short": "✅ Alert created: {asset} {direction} ₽{threshold:,.2f}",
+    "no_alerts": "You don't have any active alerts yet. Use /setalert to create one.",
+    "alert_list_header": "📌 Your active alerts:\n\n",
+    "alert_item": "• {asset} {direction} ₽{threshold:,.2f} (ID: {alert_id})",
+    "confirm_remove": "Are you sure you want to remove this alert?\n\n{alert_info}",
+    "alert_removed": "✅ Alert removed successfully!",
+    "above": "above",
+    "below": "below"
   },
   "errors": {
     "general": "An error occurred. Please try again later.",
     "network": "Network error. Please check your connection and try again.",
-    "timeout": "Request timed out. Please try again."
+    "timeout": "Request timed out. Please try again.",
+    "invalid_price": "❌ Invalid price format. Please enter a valid number.",
+    "invalid_direction": "❌ Invalid direction. Please select above or below.",
+    "invalid_asset": "❌ Invalid asset. Please select from available options.",
+    "alert_limit_exceeded": "❌ You have reached the maximum number of alerts."
   },
   "messages": {
     "bot_started": "Bot started successfully!",
@@ -22,6 +42,11 @@
     "russian": "Русский",
     "back": "Back",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "bitcoin": "Bitcoin (BTC)",
+    "ethereum": "Ethereum (ETH)",
+    "tether": "Tether (USDT)",
+    "above": "Above 📈",
+    "below": "Below 📉"
   }
 }
